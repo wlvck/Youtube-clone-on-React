@@ -1,24 +1,21 @@
-import {Box, Stack} from '@mui/material'
-import {VideoCard, ChannelCard} from './index'
+import React from "react";
+import { Stack, Box } from "@mui/material";
 
-const MyComponent = ({videos}) => {
-    const videos_list = videos.map((video, index) => {
-        return (
-            <Box key={index}>
-                {
-                    video.id.videoId && <VideoCard videoDetail={video}/>
-                }
-                {
-                    video.id.channelId && <ChannelCard channelDetail={video}/>
-                }
-            </Box>
-        )
-    })
-    return (
-        <Stack direction='row' flexWrap='wrap' justifyContent='start' gap={2}>
-            {videos_list}
-        </Stack>
-    );
-};
+import { ChannelCard, Loader, VideoCard } from "./";
 
-export default MyComponent;
+const Videos = ({ videos, direction }) => {
+  if(!videos?.length) return <Loader />;
+  
+  return (
+    <Stack direction={direction || "row"} flexWrap="wrap" justifyContent="start" alignItems="start" gap={2}>
+      {videos.map((item, idx) => (
+        <Box key={idx}>
+          {item.id.videoId && <VideoCard video={item} /> }
+          {item.id.channelId && <ChannelCard channelDetail={item} />}
+        </Box>
+      ))}
+    </Stack>
+  );
+}
+
+export default Videos;
